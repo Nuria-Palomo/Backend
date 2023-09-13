@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 
 const FormLockSchema = new mongoose.Schema({
-    email:{type: String},
-    name: {type: String},
+    email:{type: String,
+           required: true,
+           unique: true
+},
+    name: {type: String,
+           required: true,
+           unique: true
+    },
     subject: {type: String},
     message: {type: String},
 
