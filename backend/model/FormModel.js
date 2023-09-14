@@ -9,8 +9,11 @@ const FormLockSchema = new mongoose.Schema({
            required: true,
            unique: true
     },
-    subject: {type: String},
-    message: {type: String},
+    password: {type: String,
+              required: true,
+              unique: true
+    },
+    
 
 })
 const FormLock = mongoose.model("Form", FormLockSchema);
