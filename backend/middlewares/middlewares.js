@@ -1,23 +1,36 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-export default async function  hashpassword (password){
-    const passwordHashed = await bcrypt.hash(password, 10)
-    return passwordHashed
+const tokenExpirationTime = 3 * 60 * 60 * 1000
+
+dotenv.config();
+const secretKey = process.env.SECRET_KEY
+
+export default async function hashpassword(user, next) {
+  try {
+    if (user.isModified('password')) {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(user.password, salt)
+      user.password = hash
+    } next();
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const generateToken = (req) => {
-    try {
-      const { _id, name, role } = req;
-      const token = jwt.sign({ _id, name, role }, secretKey, {
-        expiresIn: tokenExpirationTime,
-      });
-  
-      req.token = token;
-  
-      return token;
-    } catch (error) {
-      console.error("Hubo error al generar el token");
-    }
-  };
+  try {
+    const { _id, email, role } = req;
+    const token = jwt.sign({ _id, email, role }, secretKey, {
+      expiresIn: tokenExpirationTime,
+    });
+
+    req.token = token;
+
+    return token;
+  } catch (error) {
+    console.error("Hubo error al generar el token");
+  }
+};
 

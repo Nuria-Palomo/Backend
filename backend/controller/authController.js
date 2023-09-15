@@ -14,6 +14,7 @@ export const login = async (req, res) => {
         return res.status(404).json({menssage:"Usuario no encontrado"})
     }
 
+    //Verificamos la contraseña
     const passwordok = await bcrypt.compare(password, user.password)
 
     if (passwordok){
@@ -26,8 +27,6 @@ export const login = async (req, res) => {
     
     //Sigue después de generar el token
     res.status(200).json({token:newtoken})
-
-
 
 }   catch (error) {
     res.status(500).json({ mensaje: 'Error en el servidor' });

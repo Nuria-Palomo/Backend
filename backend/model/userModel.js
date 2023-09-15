@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import hashpassword from '../middlewares/middlewares.js';
 
 const UserSchema = mongoose.Schema ({
 
@@ -19,8 +20,16 @@ const UserSchema = mongoose.Schema ({
     }
 
 
-},{
-    strict: true, 
-  }); 
+}
+); 
+UserSchema.pre('save', async function(next) {
+    try {
+        await hashpassword(this, next)
+    } catch (error) {
+        console.log('Hubo un error al guardar la contraseña hasheada')
+    }
+})
 
-export default  mongoose.model("User", UserSchema, "users")
+const User = mongoose.model("User", UserSchema)
+
+export default User
