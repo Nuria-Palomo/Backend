@@ -20,16 +20,14 @@ export default async function hashpassword(user, next) {
   }
 }
 
-export const generateToken = (req) => {
+export const generateToken = (req, res) => {
   try {
     const { _id, email, role } = req;
-    const token = jwt.sign({ _id, email, role }, secretKey, {
+    const token = jwt.sign({ _id: _id, email: email, role: role }, secretKey, {
       expiresIn: tokenExpirationTime,
     });
 
-    req.token = token;
-
-    return token;
+    return res.header({"auth-token": token}).json(token);
   } catch (error) {
     console.error("Hubo error al generar el token");
   }
@@ -41,7 +39,7 @@ export const tokenVerification = (req, res, next) => {
   return res.status(401).json({mensaje:"Acceso denegado"})
   try {
     const verify = jwt.verify(token, process.env.SECRET_KEY)
-    req.user = verify 
+    req.user = verify
     next()
   } catch (error) {
     console.log(error)

@@ -23,9 +23,12 @@ export const createForm = async (req, res) => {
 //traer un formulario
 
 export const getFormid = async (req, res) => {
+
+    console.log(req.user)
     try {
         const id = req.params.id //no debería de pasarse el id
-        const form = await FormLock.find(id)
+        console.log(id)
+        const form = await FormLock.findById(id)
         res.status(200).json(form)
     } catch (error) {
         res.status(400).json({message: error.message})

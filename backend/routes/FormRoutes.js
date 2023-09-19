@@ -6,7 +6,7 @@ import { tokenVerification } from "../middlewares/middlewares.js";
 const FormRouter = express.Router()
 
 FormRouter.get('/',tokenVerification, getForms)
-FormRouter.get('/:id', getFormid)
+FormRouter.get('/:id', tokenVerification, getFormid)
 FormRouter.post('/', createForm)
 FormRouter.put('/:id', updateForm)
 FormRouter.delete('/:id', deleteform)
