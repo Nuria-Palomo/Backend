@@ -3,8 +3,10 @@ import db from './database/db.js';
 import FormRouter from './routes/FormRoutes.js';
 import cors from 'cors';
 import userRouter from './routes/authRoutes.js';
+//import {createRoles} from './libs/initialSetup.js';
 
 const app = express ();
+//createRoles()
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
