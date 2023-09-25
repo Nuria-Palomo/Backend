@@ -18,10 +18,6 @@ app.use('/user', userRouter);
 
 const Port = process.env.Port || 8000;
 
-//app.use((res) => {
-    //res.status(500).json({error:'Error interno en el servidor'})
-   
-//})
 
 app.listen(Port,() => {
     console.log(`Servidor en ejecución en el puerto ${Port}`)

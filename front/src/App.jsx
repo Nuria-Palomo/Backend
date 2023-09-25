@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
+import Usuario from "./pages/Usuario"
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Route path='/'element={<h1>Home page</h1>}/>
       <Route path='/login'element={<LoginPage/>}/>
       <Route path='/register'element={<RegisterPage/>}/>
+      <Route path='/usuario'element={<Usuario/>}/>
       <Route path='/tasks'element={<h1>Tasks page</h1>}/>
       <Route path='/add-task'element={<h1>new task</h1>}/>
       <Route path='/tasks/:id'element={<h1>update task</h1>}/>

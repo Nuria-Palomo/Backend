@@ -6,7 +6,7 @@ import Jwt  from 'jsonwebtoken'
 
 export const login = async (req, res) => {
 
-    //LOOKS UP FOR THE DATA THAT'S BEING PUT ON THE INPUTS
+    
     const { uname, email, password } = req.body
     const user = await User.findOne({ email }) || await User.findOne({ uname });
 
@@ -33,40 +33,6 @@ export const login = async (req, res) => {
 }
 
 
-/*export const login = async (req, res) => {
-    try{
-    const { email, password } = req.body
-    //Busca al usuario por el email
-    const user = await User.findOne({email})
-    //comprueba si el usuario existe
-    if (!user) {
-        return res.status(404).json({menssage:"Usuario no encontrado"})
-    }else {
-        const passwordok = await bcrypt.compare(password, user.password)
-
-        if (!passwordok){
-        return res.status(400).json({message:"Clave inválida"})
-        } 
-
-    }
-
-    
-   
-
-    //Genera el token
-   const newtoken = generateToken(user); 
-
-    
-    //Sigue después de generar el token
-    res.header({'token':newtoken})
-
-
-
-}   catch (error) {
-    res.status(500).json({ mensaje: 'Error en el servidor' });
-
-}
-}*/
 
 export const createUser = async (req, res, next) =>{
     try {
