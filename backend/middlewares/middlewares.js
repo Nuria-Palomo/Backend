@@ -48,12 +48,23 @@ export const tokenVerification = (req, res, next) => {
 }
 
 export const verifyAdminRole = (req, res, next) => {
+  const token = req.header('auth-token')
+  if(!token)
+  return res.status(401).json({mensaje:"Acceso denegado"})
+  try {
+    const verify = jwt.verify(token, process.env.SECRET_KEY)
+    req.user = verify
+    console.log(verify)
+  } catch (error) {
+    console.log(error)
+    
+  }
 
   const userRole = [req.user.role]
-
+console.log("middleware")
   console.log(userRole)
 
-  if (req.user && user.Role.includes('admin')) {
+  if (req.user && req.user.role==='admin') {
     next();
   }else {
     res.status(403).json({message:'Permiso denegado'});

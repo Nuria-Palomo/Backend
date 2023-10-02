@@ -80,13 +80,22 @@ export const updateForm = async (req, res) =>{
     }
 }
 //borrar
+
 export const deleteform = async (req, res) => {
+    console.log("entra en el controlador")
     try {
         const id = req.params.id
-        const form = await FormLock.findByIdAndUpdate({_id: id});
+        const form = await FormLock.findById({_id: id});
         if(!form)
             return res.status(404).json ({message: "No se encontró el formulario con el id especificado."});
-        res.status(200).json()
+
+        const userDeleted = await FormLock.findByIdAndDelete(id)
+
+        if(!userDeleted)
+        return res.status(404).json ({message: "eçError al eleminar."});
+
+
+        res.status(200).json({message: "Se eliminó correctamente."})
     } catch (error) {
         res.status(400).json({message: error.message});
     }

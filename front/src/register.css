@@ -1,0 +1,57 @@
+body {
+    border-radius: 0.5rem
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    min-height: 100vh; /* Establecer altura mínima de la ventana */
+  }
+  
+  .registro {
+    max-width: 400px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el título del formulario */
+  .registro h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para los campos de entrada */
+  .registro input[type="text"],
+  .registro input[type="nombre"],
+  .registro input[type="email"],
+  .registro input[type="password"] {
+    width: 100%;
+    padding: 10px 0px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding-left: 10px;
+  }
+  
+  /* Estilos para el botón de registro */
+  .registro button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .registro button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  

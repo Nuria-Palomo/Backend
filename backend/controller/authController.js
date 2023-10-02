@@ -7,7 +7,7 @@ import Jwt  from 'jsonwebtoken'
 export const login = async (req, res) => {
 
     
-    const { uname, email, password } = req.body
+    const { uname, email, password, role } = req.body
     const user = await User.findOne({ email }) || await User.findOne({ uname });
 
    
@@ -22,8 +22,10 @@ export const login = async (req, res) => {
         } 
         
         
-    }
-    const token = Jwt.sign({ _id:  user._id, username: user.uname, email: user.emai}, process.env.SECRET_KEY)
+    } 
+
+    console.log(user)
+    const token = Jwt.sign({ _id:  user._id, username: user.name, email: user.email, role: user.role}, process.env.SECRET_KEY)
     
     await res.header({
       "auth-token": token,

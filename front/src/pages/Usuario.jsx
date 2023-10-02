@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import '../user.css';
+
 
 function CreateUsuario() {
     const [name, setName] = useState("");
@@ -26,6 +28,8 @@ function CreateUsuario() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+         
+       
         if (response) {
             try {
                 fetch('http://localhost:8000/user', options)
@@ -39,10 +43,12 @@ function CreateUsuario() {
         }
     };
 
+
     return (
         <div className="container">
             <div className="usuario">
                 <h1>Crear Usuario</h1>
+
 
                 <form onSubmit={handleSubmit}>
                     <input
@@ -52,12 +58,14 @@ function CreateUsuario() {
                         placeholder='Nombre'
                     />
 
+
                     <input
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                         placeholder='Email'
                     />
+
 
                     <input
                         type="password"
@@ -66,6 +74,7 @@ function CreateUsuario() {
                         placeholder='Password'
                     />
 
+
                     <input
                         type="text"
                         onChange={(e) => setRole(e.target.value)}
@@ -73,11 +82,13 @@ function CreateUsuario() {
                         placeholder='Role'
                     />
 
+
                     <ReCAPTCHA
                         ref={recaptchaRef}
                         sitekey="6LfsIkUoAAAAAIho2WmIAXLLhCEPf2Ptlhlgi-6J" // Clave de sitio de reCAPTCHA
                         onChange={(value) => setResponse(value)}
                     />
+
 
                     <button type='submit' className='button'>
                         Register
@@ -87,5 +98,6 @@ function CreateUsuario() {
         </div>
     );
 }
+
 
 export default CreateUsuario;
