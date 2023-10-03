@@ -24,7 +24,7 @@ function LoginPage() {
   
 
       try {
-         fetch('http://localhost:8000/user', options)
+         fetch('http://localhost:8000/user/login', options)
           .then(res => res.json())
           .then(data => console.log(data))
       } catch (error) {

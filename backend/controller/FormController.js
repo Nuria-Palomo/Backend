@@ -1,104 +1,95 @@
-import FormLock from "../model/FormModel.js";
+import User from '../model/userModel.js'
+import bcrypt from 'bcryptjs'
+import hashpassword from '../middlewares/middlewares.js'
+import { generateToken } from '../middlewares/middlewares.js'
+import Jwt  from 'jsonwebtoken'
 
+export const login = async (req, res) => {
 
-//Crud (crear, leer, acrualizar y borrar)
-
-//crear
-export const createForm = async (req, res) => {
-    const {Email, Name, Subject, Message} = req.body
-
-    if (!Email || !Name || !Subject || !Message) {
-     
-       return res.status(400).json ({message: "Todos los campos son requeridos."})
-    }
-    try {
-        const form = await FormLock.create (req.body)
-        res.status(201).json(form)
-    } catch (error) {
-        res.status(400).json({message: error.message})
-    }
     
-};
+    const { name, email, password, role } = req.body
+    const user = await User.findOne({ email }) || await User.findOne({ name });
 
-//traer un formulario
+   
 
-export const getFormid = async (req, res) => {
+    if(!user) {
+        return res.status(400).json({message: "Incorrect Email or username"})
+    } else {
+        const validPassword = await bcrypt.compare(password, user.password)
 
-    console.log(req.user)
+        if(!validPassword) {
+            return res.status(400).json({ message: "invalid password" })
+        } 
+        
+        
+    } 
+
+    console.log(user)
+    const token = Jwt.sign({ _id:  user._id, username: user.name, email: user.email, role: user.role}, process.env.SECRET_KEY)
+    
+    await res.header({
+      "auth-token": token,
+      
+    }).json( token )
+
+}
+
+export const createForm = async (req, res, next) =>{
     try {
-        const id = req.params.id //no debería de pasarse el id
-        console.log(id)
-        const form = await FormLock.findById(id)
-        res.status(200).json(form)
+        const user = new FormLock(req.body)
+        await user.save()
+        res.status(201).json(user)
     } catch (error) {
-        res.status(400).json({message: error.message})
+        next (error)
     }
 }
 
-//traer todos los formularios
+//Trae el formulario con su id
 
-export const getForms = async (req, res) => {
+export const getFormid = async (req, res, next) =>{
     try {
-        const form = await FormLock.find()
-        res.status(200).json(form)
+        const id = new FormLock(req.body)
+        await id.save()
+        res.status(201).json(id)
     } catch (error) {
-        res.status(400).json({message: error.message});
-    }
-}
-//Método post
-export const postForms = async (req, res) => {
-    try {
-        //Obtengo los datos del body
-        const formData = req.body;
-
-        //Guado los datos en la base de datos
-        const savedForm = await FormLock.create() 
-
-        res.status(200).json(savedForm)
-    } catch (error) {
-        res.status(400).json({message: error.message});
+        next (error)
     }
 }
 
-//actualizar el formulario
+//Trae todos los formulario 
 
-export const updateForm = async (req, res) =>{
-    const {Email, Name, Subject, Message} = req.body
-    if (!Email && !Name  && !Subject && !Message) {
-        return res.status(400).json ({message: "Deben proporcionar al menos un campo para actualizar."});
-    }
+export const getForms = async (req, res, next) =>{
     try {
-        const id = req.params.id
-        const form = await FormLock.findByIdAndUpdate({_id: id}. req.body, {new:true});
-        if(!form)
-            return res.status(404).json ({message: "No se encontró el formulario con el id especificado."});
-
-        res.status(200).json(form)
-
+        const forms = new FormLock(req.body)
+        await forms.save()
+        res.status(201).json(forms)
     } catch (error) {
-        res.status(400).json({message: error.message});
-    }
-}
-//borrar
-
-export const deleteform = async (req, res) => {
-    console.log("entra en el controlador")
-    try {
-        const id = req.params.id
-        const form = await FormLock.findById({_id: id});
-        if(!form)
-            return res.status(404).json ({message: "No se encontró el formulario con el id especificado."});
-
-        const userDeleted = await FormLock.findByIdAndDelete(id)
-
-        if(!userDeleted)
-        return res.status(404).json ({message: "eçError al eleminar."});
-
-
-        res.status(200).json({message: "Se eliminó correctamente."})
-    } catch (error) {
-        res.status(400).json({message: error.message});
+        next (error)
     }
 }
 
- 
+//Actualizar
+
+export const updateForm = async (req, res, next) =>{
+    try {
+        const id = new FormLock(req.body)
+        await id.save()
+        res.status(201).json(id)
+    } catch (error) {
+        next (error)
+    }
+}
+
+//Eliminar
+
+export const deleteForm = async (req, res, next) =>{
+    try {
+        const id = new FormLock(req.body)
+        await id.save()
+        res.status(201).json(id)
+    } catch (error) {
+        next (error)
+    }
+}
+
+

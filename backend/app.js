@@ -5,6 +5,10 @@ import cors from 'cors';
 import userRouter from './routes/authRoutes.js';
 //import {createRoles} from './libs/initialSetup.js';
 
+
+
+
+
 const app = express ();
 //createRoles()
 

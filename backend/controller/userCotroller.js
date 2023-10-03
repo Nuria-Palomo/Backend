@@ -20,7 +20,7 @@ export const createUser = async (req, res) => {
     
 };
 
-//traer un userulario
+//traer un user
 
 export const getUserId = async (req, res) => {
 
@@ -35,7 +35,7 @@ export const getUserId = async (req, res) => {
     }
 }
 
-//traer todos los userularios
+//traer todos los users
 
 export const getUsers = async (req, res) => {
     try {
@@ -60,7 +60,7 @@ export const postUsers = async (req, res) => {
     }
 }
 
-//actualizar el userulario
+//actualizar 
 
 export const updateUser = async (req, res) =>{
     const {Email, Name, Subject, Message} = req.body
@@ -85,7 +85,7 @@ export const deleteUser = async (req, res) => {
         const id = req.params.id
         const user = await userLock.findByIdAndUpdate({_id: id});
         if(!user)
-            return res.status(404).json ({message: "No se encontró el userulario con el id especificado."});
+            return res.status(404).json ({message: "No se encontró el usuario con el id especificado."});
         res.status(200).json()
     } catch (error) {
         res.status(400).json({message: error.message});
