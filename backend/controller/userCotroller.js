@@ -1,6 +1,5 @@
 import userLock from "../model/userModel.js";
 
-
 //Crud (crear, leer, acrualizar y borrar)
 
 //crear
@@ -46,7 +45,7 @@ export const getUsers = async (req, res) => {
     }
 }
 //Método post
-export const postUsers = async (req, res) => {
+/*export const postUsers = async (req, res) => {
     try {
         //Obtengo los datos del body
         const userData = req.body;
@@ -58,7 +57,7 @@ export const postUsers = async (req, res) => {
     } catch (error) {
         res.status(400).json({message: error.message});
     }
-}
+}*/
 
 //actualizar 
 

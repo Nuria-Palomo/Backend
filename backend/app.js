@@ -3,6 +3,7 @@ import db from './database/db.js';
 import FormRouter from './routes/FormRoutes.js';
 import cors from 'cors';
 import userRouter from './routes/authRoutes.js';
+import apiRouter from './routes/userRoutes.js';
 //import {createRoles} from './libs/initialSetup.js';
 
 
@@ -19,6 +20,7 @@ app.use(cors());
 
 app.use('/form', FormRouter);
 app.use('/user', userRouter);
+app.use('/api', apiRouter);
 
 const Port = process.env.Port || 8000;
 

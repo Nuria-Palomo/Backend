@@ -1,4 +1,4 @@
-import User from '../model/userModel.js'
+import FormLock from '../model/FormModel.js'
 import bcrypt from 'bcryptjs'
 import hashpassword from '../middlewares/middlewares.js'
 import { generateToken } from '../middlewares/middlewares.js'
@@ -8,7 +8,7 @@ export const login = async (req, res) => {
 
     
     const { name, email, password, role } = req.body
-    const user = await User.findOne({ email }) || await User.findOne({ name });
+    const user = await FormLock.findOne({ email }) || await FormLock.findOne({ name });
 
    
 
@@ -37,10 +37,13 @@ export const login = async (req, res) => {
 export const createForm = async (req, res, next) =>{
     try {
         const user = new FormLock(req.body)
+
+            console.log(user)
+
         await user.save()
         res.status(201).json(user)
     } catch (error) {
-        next (error)
+        res.status(403).json("Hubo un error a la enviar el formulario")
     }
 }
 

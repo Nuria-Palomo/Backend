@@ -9,7 +9,7 @@ const FormRouter = express.Router()
 
 FormRouter.get('/',tokenVerification, getForms)
 FormRouter.get('/:id', tokenVerification, getFormid)
-FormRouter.post('/', tokenVerification, createForm)
+FormRouter.post('/',createForm)
 FormRouter.put('/:id', verifyAdminRole, updateForm)//solo admin
 FormRouter.delete('/:id', verifyAdminRole, deleteForm)//solo admin
 

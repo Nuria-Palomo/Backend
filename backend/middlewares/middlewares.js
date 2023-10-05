@@ -73,8 +73,8 @@ console.log("middleware")
 };
 
 // Configuración del límite de intentos
-const limiter = rateLimit({
+export const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 5, // Máximo de intentos por IP en el período de tiempo especificado
+  max: 2, // Máximo de intentos por IP en el período de tiempo especificado
   message: { error: 'Demasiadas solicitudes desde esta IP, por favor intenta nuevamente más tarde.' },
 });
