@@ -43,7 +43,7 @@ export const createForm = async (req, res, next) =>{
         await user.save()
         res.status(201).json(user)
     } catch (error) {
-        res.status(403).json("Hubo un error a la enviar el formulario")
+        res.status(403).json({message:error.message})
     }
 }
 
